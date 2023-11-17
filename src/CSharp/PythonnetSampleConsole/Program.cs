@@ -18,7 +18,7 @@ namespace PythonnetSampleConsoleApp
                 throw new FileNotFoundException(dllFilePath);
 
             // 对应Python内的重要路径
-            string[] pyPaths = { "DLLs", "Lib", "Lib\\site-packages", "Lib\\site-packages\\numpy" };
+            string[] pyPaths = { "DLLs", "Lib", "Lib\\site-packages" };
             string pySearchPath = $"{pythonHomePath};";
             foreach (var p in pyPaths)
             {

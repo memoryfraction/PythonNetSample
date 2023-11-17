@@ -65,8 +65,9 @@ namespace PythonnetSampleConsoleApp
                     accumulate : _accumulate
                 );
 
+                // # 2. 计算Sharp Ratio 只能第三方计算;  
+
                 Console.Write(pf.stats()); // 查看回测结果指标，比如：胜率，总回报等
-                Console.Write(pf.orders.records_readable); // 查看订单明细
                 pf.plot().show(); // 绘图 订单 叠加 标的物价格
 
                 Console.ReadKey();
