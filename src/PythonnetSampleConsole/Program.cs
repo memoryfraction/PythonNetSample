@@ -1,4 +1,7 @@
 ﻿using Python.Runtime;
+using System;
+using System.IO;
+
 
 namespace PythonnetSampleConsoleApp
 {
@@ -6,22 +9,26 @@ namespace PythonnetSampleConsoleApp
     {
         static void Main(string[] args)
         {
-            string dllPath = @"C:\Program Files\Python311\python311.dll"; // 此处需要对应Python的安装路径
-            string pythonHomePath = @"C:\Program Files\Python311";
+            // 配置并准备PythonEngine
+            var pythonHomePath = @"D:\ProgramData\anaconda3\envs\python39";//创建一个python39的虚拟环境，并指向其路径;
+            if(!Directory.Exists(pythonHomePath))
+                throw new DirectoryNotFoundException(pythonHomePath);
+            var dllFilePath = $@"{pythonHomePath}\python39.dll"; // 请确保指向正确的 Python DLL 路径, pythonnet兼容python39
+            if(!File.Exists(dllFilePath))
+                throw new FileNotFoundException(dllFilePath);
 
             // 对应Python内的重要路径
-            string[] py_paths = {"DLLs", "lib", "lib\\site-packages", "lib\\site-packages\\win32"
-                , "lib\\site-packages\\win32\\lib", "lib\\site-packages\\Pythonwin" };
+            string[] pyPaths = { "DLLs", "Lib", "Lib\\site-packages", "Lib\\site-packages\\numpy" };
             string pySearchPath = $"{pythonHomePath};";
-            foreach (string p in py_paths)
+            foreach (var p in pyPaths)
             {
                 var tmpPath = Path.Combine(pythonHomePath, p);
                 pySearchPath += $"{tmpPath};";
             }
 
             // 此处解决BadPythonDllException报错
-            Runtime.PythonDLL = dllPath;
-            Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", dllPath);
+            Runtime.PythonDLL = dllFilePath;
+            Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", dllFilePath);
 
             // 配置python环境搜索路径解决 PythonEngine.Initialize() 崩溃
             PythonEngine.PythonHome = pythonHomePath;
@@ -36,7 +43,7 @@ namespace PythonnetSampleConsoleApp
                 dynamic sin = np.sin;
                 Console.WriteLine(sin(5));
 
-                double c = np.cos(5) + sin(5);
+                double c = (double)(np.cos(5) + sin(5));
                 Console.WriteLine(c);
 
                 dynamic a = np.array(new List<float> { 1, 2, 3 });

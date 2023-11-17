@@ -1,0 +1,4 @@
+
+20230211
+python39才能安装vectorBT，而Anaconda不支持安装，进而不支持C#的控制
+目标：通过C#形成交易信号，然后调用VectorBT进行回测， 生成trades，图片和结果;
