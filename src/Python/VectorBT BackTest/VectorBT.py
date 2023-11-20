@@ -14,13 +14,9 @@ pf = vbt.Portfolio.from_signals(
     close=ohlcv['Close'],
     entries=entries,
     exits=exits,
-    init_cash=10000
+    init_cash=10000,
+    freq="1d" # 如果没有这一行，无法得到夏普比率
 )
 
 # 获取回测统计信息
-stats = pf.stats()
-
-# 输出回测结果
-print(stats)
-
-
+print(pf.stats())
