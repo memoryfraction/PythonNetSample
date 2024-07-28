@@ -2,7 +2,7 @@
 
 namespace PythonnetSampleConsoleApp
 {
-    public class Numpy
+    public class NumpySample
     {
         public static void NumpyMethod()
         {
