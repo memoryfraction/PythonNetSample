@@ -16,6 +16,9 @@
     <None Update="data\Biance_BTC_From20180101_To20230101_1d.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="MySamplePython.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
