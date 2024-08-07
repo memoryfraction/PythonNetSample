@@ -1,4 +1,5 @@
 ﻿using Python.Runtime;
+using System.Reflection.Metadata;
 
 
 
@@ -25,7 +26,7 @@ namespace PythonnetSampleConsoleApp
                 Console.WriteLine(data);
 
                 // sample2， 期望：打印：hello world
-                RunScript("MySamplePython", "say_hello");
+                RunScript("MySamplePython", "say_hello", "Tom");
             }
         }
 
@@ -34,10 +35,10 @@ namespace PythonnetSampleConsoleApp
         /// </summary>
         /// <param name="scriptFileName">scriptFileName 需要copy Always</param>
         /// <param name="methodName"></param>
-        static void RunScript(string scriptFileName, string methodName)
+        static void RunScript(string scriptFileName, string methodName, string parameter)
         {
             var pythonScript = Py.Import(scriptFileName);
-            var response = pythonScript.InvokeMethod(methodName);
+            var response = pythonScript.InvokeMethod(methodName, new PyObject[] { new PyString(parameter) });
             Console.WriteLine(response);
         }
 
