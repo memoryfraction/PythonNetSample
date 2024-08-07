@@ -26,6 +26,10 @@ namespace PythonnetSampleConsoleApp
                 Console.WriteLine(data);
 
                 // sample2， 期望：打印：hello world
+                // 添加Python脚本文件路径:"Data\\MySamplePython.py"
+                string scriptDirectory = AppDomain.CurrentDomain.BaseDirectory + "data";
+                PythonEngine.Exec($"import sys; sys.path.append(r'{scriptDirectory}')");
+
                 RunScript("MySamplePython", "say_hello", "Tom");
             }
         }
@@ -33,11 +37,11 @@ namespace PythonnetSampleConsoleApp
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="scriptFileName">scriptFileName 需要copy Always</param>
+        /// <param name="scriptFileNameWithoutExtension">scriptFileNameWithoutExtension 需要copy Always</param>
         /// <param name="methodName"></param>
-        static void RunScript(string scriptFileName, string methodName, string parameter)
+        static void RunScript(string scriptFileNameWithoutExtension, string methodName, string parameter)
         {
-            var pythonScript = Py.Import(scriptFileName);
+            var pythonScript = Py.Import(scriptFileNameWithoutExtension);
             var response = pythonScript.InvokeMethod(methodName, new PyObject[] { new PyString(parameter) });
             Console.WriteLine(response);
         }
