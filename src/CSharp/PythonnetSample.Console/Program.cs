@@ -10,12 +10,12 @@ namespace PythonnetSampleConsoleApp
         static void Main(string[] args)
         {
             // 初始化变量
-            var condaVenvHomePath =  @"D:\ProgramData\PythonVirtualEnvs\pair_trading";
-            var infra = PythonNetInfra.GetPythonInfra(condaVenvHomePath,  "python39.dll");
+            var condaVenvHomePath = @"D:\ProgramData\PythonVirtualEnvs\pair_trading";
+            var infra = PythonNetInfra.GetPythonInfra(condaVenvHomePath, "python39.dll");
             Runtime.PythonDLL = infra.PythonDLL;
             PythonEngine.PythonHome = infra.PythonHome;
             PythonEngine.PythonPath = infra.PythonPath;
-            
+
             PythonEngine.Initialize();// 初始化Python引擎
             // 使用Python GIL
             using (Py.GIL())
