@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<Compile Remove="python_env\**\*.cs" />
 	<None Include="python_env\**\*">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None> 

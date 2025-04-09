@@ -1,4 +1,4 @@
-#!E:\GitHub\PythonNetSample\src\CSharp\PythonnetSample.Console\python_env\Scripts\python.exe
+#!D:\ProgramData\PythonVirtualEnvs\pythonnet\python.exe
 
 import datetime
 import os

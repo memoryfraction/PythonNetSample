@@ -94,16 +94,11 @@ NPY_NO_EXPORT  int PyUFunc_GiveFloatingpointErrors \
 #define PyUFunc_API PY_UFUNC_UNIQUE_SYMBOL
 #endif
 
-/* By default do not export API in an .so (was never the case on windows) */
-#ifndef NPY_API_SYMBOL_ATTRIBUTE
-    #define NPY_API_SYMBOL_ATTRIBUTE NPY_VISIBILITY_HIDDEN
-#endif
-
 #if defined(NO_IMPORT) || defined(NO_IMPORT_UFUNC)
-extern NPY_API_SYMBOL_ATTRIBUTE void **PyUFunc_API;
+extern void **PyUFunc_API;
 #else
 #if defined(PY_UFUNC_UNIQUE_SYMBOL)
-NPY_API_SYMBOL_ATTRIBUTE void **PyUFunc_API;
+void **PyUFunc_API;
 #else
 static void **PyUFunc_API=NULL;
 #endif
@@ -255,7 +250,11 @@ _import_umath(void)
   PyObject *numpy = PyImport_ImportModule("numpy._core._multiarray_umath");
   if (numpy == NULL && PyErr_ExceptionMatches(PyExc_ModuleNotFoundError)) {
     PyErr_Clear();
-    numpy = PyImport_ImportModule("numpy.core._multiarray_umath");
+    numpy = PyImport_ImportModule("numpy._core._multiarray_umath");
+    if (numpy == NULL && PyErr_ExceptionMatches(PyExc_ModuleNotFoundError)) {
+      PyErr_Clear();
+      numpy = PyImport_ImportModule("numpy.core._multiarray_umath");
+    }
   }
 
   if (numpy == NULL) {

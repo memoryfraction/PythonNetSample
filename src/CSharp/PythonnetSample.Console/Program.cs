@@ -10,7 +10,7 @@ namespace PythonnetSampleConsoleApp
         static void Main(string[] args)
         {
             // 初始化变量
-            var condaVenvHomePath = @"D:\ProgramData\PythonVirtualEnvs\pair_trading";
+            var condaVenvHomePath =  AppDomain.CurrentDomain.BaseDirectory + "python_env";
             var infra = PythonNetInfra.GetPythonInfra(condaVenvHomePath, "python39.dll");
             Runtime.PythonDLL = infra.PythonDLL;
             PythonEngine.PythonHome = infra.PythonHome;
