@@ -1,24 +1,31 @@
 ﻿using Python.Runtime;
-using System;
+using System.Reflection.Metadata;
+
+
 
 namespace PythonnetSampleConsoleApp
 {
     internal class Program
     {
-        private static bool pythonInitialized = false; // 确保 Python 运行时只初始化一次
-        private static readonly object lockObj = new object(); // 线程安全锁
-
         static void Main(string[] args)
         {
-            InitializePythonEngine(); // 确保 Python 运行时只初始化一次
+            // 初始化变量
+            var condaVenvHomePath =  AppDomain.CurrentDomain.BaseDirectory + "python_env";
+            var infra = PythonNetInfra.GetPythonInfra(condaVenvHomePath, "python39.dll");
+            Runtime.PythonDLL = infra.PythonDLL;
+            PythonEngine.PythonHome = infra.PythonHome;
+            PythonEngine.PythonPath = infra.PythonPath;
 
-            using (Py.GIL()) // 进入 Python 全局解释器锁，确保线程安全
+            PythonEngine.Initialize();// 初始化Python引擎
+            // 使用Python GIL
+            using (Py.GIL())
             {
-                // Sample1 获取数据，并打印; 期望：打印获取的金融数据;
+                // sample1 获取数据，并打印; 期望：打印获取的金融数据;
                 dynamic data = YfinanceSample();
+                // 打印股票数据
                 Console.WriteLine(data);
 
-                // Sample2， 期望：打印：hello world
+                // sample2， 期望：打印：hello world
                 // 添加Python脚本文件路径:"Data\\MySamplePython.py"
                 string scriptDirectory = AppDomain.CurrentDomain.BaseDirectory + "data";
                 PythonEngine.Exec($"import sys; sys.path.append(r'{scriptDirectory}')");
@@ -28,36 +35,10 @@ namespace PythonnetSampleConsoleApp
         }
 
         /// <summary>
-        /// 初始化 Python 运行时，确保线程安全，防止多线程环境下重复初始化导致崩溃
+        /// 
         /// </summary>
-        private static void InitializePythonEngine()
-        {
-            if (!pythonInitialized) // 先检查是否已初始化，减少不必要的锁竞争
-            {
-                lock (lockObj) // 确保多线程环境下不会重复初始化
-                {
-                    if (!pythonInitialized) // 双重检查锁，防止多个线程同时进入
-                    {
-                        var condaVenvHomePath = @"D:\\ProgramData\\PythonVirtualEnvs\\pair_trading";
-                        var infra = PythonNetInfra.GetPythonInfra(condaVenvHomePath, "python39.dll");
-                        Runtime.PythonDLL = infra.PythonDLL;
-                        PythonEngine.PythonHome = infra.PythonHome;
-                        PythonEngine.PythonPath = infra.PythonPath;
-
-                        PythonEngine.Initialize(); // 只初始化一次
-
-                        pythonInitialized = true; // 标记为已初始化，防止重复调用
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 运行 Python 脚本
-        /// </summary>
-        /// <param name="scriptFileNameWithoutExtension">scriptFileNameWithoutExtension 需要设置为 "Copy Always"</param>
-        /// <param name="methodName">Python 方法名</param>
-        /// <param name="parameter">传递的参数</param>
+        /// <param name="scriptFileNameWithoutExtension">scriptFileNameWithoutExtension 需要copy Always</param>
+        /// <param name="methodName"></param>
         static void RunScript(string scriptFileNameWithoutExtension, string methodName, string parameter)
         {
             var pythonScript = Py.Import(scriptFileNameWithoutExtension);
@@ -65,10 +46,11 @@ namespace PythonnetSampleConsoleApp
             Console.WriteLine(response);
         }
 
+
         /// <summary>
-        /// 获取股票数据，并返回
+        /// 获取数据，并返回
         /// </summary>
-        /// <returns>股票历史数据</returns>
+        /// <returns></returns>
         static dynamic YfinanceSample()
         {
             // 导入yfinance并获取股票数据
