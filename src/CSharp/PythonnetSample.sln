@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythonnetSample.Tests", "Py
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PythonnetSample.ConsoleApp", "PythonnetSample.Console\PythonnetSample.ConsoleApp.csproj", "{496C157D-C710-4EE3-8C25-FF4FDF34997B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythonnetSample.Bll", "PythonnetSample.Bll\PythonnetSample.Bll.csproj", "{5C19270E-5C42-4640-BC0E-C68557951105}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{496C157D-C710-4EE3-8C25-FF4FDF34997B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{496C157D-C710-4EE3-8C25-FF4FDF34997B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{496C157D-C710-4EE3-8C25-FF4FDF34997B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C19270E-5C42-4640-BC0E-C68557951105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C19270E-5C42-4640-BC0E-C68557951105}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C19270E-5C42-4640-BC0E-C68557951105}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C19270E-5C42-4640-BC0E-C68557951105}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
